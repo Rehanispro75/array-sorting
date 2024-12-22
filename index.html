@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array Mapping and Sorting</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        input, button {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Array Mapping and Sorting</h1>
+    <label for="arrayInput">Enter numbers (comma-separated): </label>
+    <input type="text" id="arrayInput" placeholder="e.g., 1, 2, 3">
+    <br>
+    <label for="mapValue">Enter a number to map: </label>
+    <input type="number" id="mapValue">
+    <br>
+    <button id="processArray">Process Array</button>
+
+    <h2>Results</h2>
+    <p><strong>Mapped Array (Ascending Order):</strong> <span id="ascending"></span></p>
+    <p><strong>Mapped Array (Descending Order):</strong> <span id="descending"></span></p>
+
+    <script>
+        document.getElementById('processArray').addEventListener('click', () => {
+            const arrayInput = document.getElementById('arrayInput').value;
+            const mapValue = parseFloat(document.getElementById('mapValue').value);
+
+            try {
+                if (!arrayInput || isNaN(mapValue)) {
+                    throw new Error('Please provide valid input for both fields.');
+                }
+
+                const array = arrayInput.split(',').map(Number);
+
+                if (array.some(isNaN)) {
+                    throw new Error('Please ensure all array elements are valid numbers.');
+                }
+
+                const mappedArray = array.map(num => num * mapValue);
+
+                const ascending = [...mappedArray].sort((a, b) => a - b);
+                const descending = [...mappedArray].sort((a, b) => b - a);
+
+                document.getElementById('ascending').textContent = ascending.join(', ');
+                document.getElementById('descending').textContent = descending.join(', ');
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+    </script>
+</body>
+</html>
